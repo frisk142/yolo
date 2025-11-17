@@ -11,7 +11,7 @@ from ultralytics import YOLO
 import yaml
 
 
-CLASS_MAP = {"apple":0 , "kiwi":1}
+CLASS_MAP = {""} #所需的类别名字
 
 def json_yolo (json_dir,output):
     # 在output路径下创建images,labels文件
@@ -133,9 +133,14 @@ def yolo (output_y,epochs = 75,img_size = 800):
     print(f"MAP50-95{metrics.box.map:.4f}")
 
 if __name__ == "__main__":
+    print("开始转换yolo")
+    output = r"" # 数据集根目录位置
+    json_dir = r"" # 标注后json文件夹的位置
+    images_path, labels_path = json_yolo(json_dir, output)
+    print("转换完成")
     print("开始数据划分")
-    output_dir = r"C:\yolo shu ju ji\furit"
-    images_dir = r"C:\yolo shu ju ji\furit\output\images"
-    labels_dir = r"C:\yolo shu ju ji\furit\output\labels"
-    shujufenge(images_dir,labels_dir,output_dir)
+    shujufenge(images_path,labels_path,output)
     print("数据划分结束")
+    print("开始yolo训练")
+    yolo(output)
+    print("yolo训练结束")
